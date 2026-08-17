@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/webp" href="assets/aline-icon.webp">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: oklch(0.16 0 0); }
+    .nav-trigger, .search-trigger, .icon-btn { transition: opacity 0.2s ease; }
+    .nav-trigger:hover, .search-trigger:hover, .icon-btn:hover { opacity: 0.6; }
+    .photo-frame { transition: filter 0.4s ease; }
+    .post-photo-frame { aspect-ratio: 4 / 3; }
+    @media (max-width: 480px) {
+      .post-photo-frame { aspect-ratio: 1 / 1; }
+    }
+    .blog-card:hover .photo-frame { filter: grayscale(0) !important; }
+    .tab-btn { background-color: rgba(248, 245, 236, 1); box-sizing: border-box; transition: background-color 0.2s ease, opacity 0.2s ease; }
+    .tab-btn:hover { background-color: rgba(248, 245, 236, 0.8) !important; }
+    .tab-btn:hover .tab-label { color: oklch(0.3 0 0 / 0.35) !important; }
+    .tab-label { font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; color: oklch(0.3 0 0); transition: color 0.2s ease; }
+    .carousel-track { scrollbar-width: none; }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-card { width: min(320px, calc(100vw - 64px)); flex-shrink: 0; }
+    .carousel-fade { display: none; }
+    .carousel-arrow { display: flex; transition: opacity 0.2s ease, transform 0.2s ease; }
+    .carousel-arrow:hover { opacity: 0.85; transform: scale(1.06); }
+    @media (max-width: 720px) {
+      .carousel-fade { display: block; }
+      .carousel-arrow { display: none; }
+    }
+    .why-group { display: flex; align-items: center; gap: clamp(28px, 5vw, 56px); width: fit-content; max-width: 90vw; margin: 0 auto; }
+    .why-title { font-size: clamp(56px, 14vw, 110px); }
+    @media (max-width: 560px) {
+      .why-group { flex-direction: column; text-align: center; }
+      .why-title { font-size: clamp(90px, 26vw, 130px); }
+    }
+    .aa-hero { --desktop-display: flex; --mobile-display: none; }
+    @media (max-width: 720px) {
+      .aa-hero { --desktop-display: none; --mobile-display: flex; }
+    }
+    .who-photo-frame { position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid oklch(0.3 0 0 / 0.25); }
+    .who-title-desktop { display: block; font-size: clamp(70px, 8vw, 110px) !important; }
+    .who-title-mobile { display: none; }
+    @media (max-width: 768px) {
+      .who-grid { grid-template-columns: 1fr !important; max-width: 380px; margin: 0 auto; }
+      .who-photo-frame { aspect-ratio: 1 / 1; border: none; }
+      .who-title-desktop { display: none; }
+      .who-title-mobile { display: block; }
+      .who-text-block p { max-width: none !important; width: 100%; }
+    }
+    @font-face {
+      font-family: 'P22 Dearest';
+      src: url('assets/P22DearestPro.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/GeistMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+  </style>
+  <script src="./image-slot.js"></script>
+</helmet>
+
+<main class="aa-hero" style="position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; font-family: Inter, Arial, sans-serif;">
+
+  <img alt="Retrato em preto e branco" src="assets/hero-bg.webp" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65% 30%;" />
+  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, oklch(0.14 0 0 / 0.25) 0%, oklch(0.14 0 0 / 0) 30%, oklch(0.14 0 0 / 0) 78%, oklch(0.14 0 0 / 0.3) 100%);"></div>
+
+  <header style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; height: 74px;">
+    <div style="position: absolute; inset: 0; margin: 12px auto 0; max-width: {{ barMaxWidth }}; height: 50px; background: {{ barBackground }}; backdrop-filter: {{ barBlur }}; -webkit-backdrop-filter: {{ barBlur }}; border: {{ barBorder }}; border-bottom: {{ barBorderBottom }}; border-radius: {{ barRadius }}; box-shadow: {{ barShadow }}; transition: background 0.55s ease, border-color 0.55s ease, border-radius 0.55s ease, box-shadow 0.55s ease, backdrop-filter 0.55s ease, max-width 0.55s ease;"></div>
+    <div style="align-items: center; display: flex; gap: {{ barGap }}; height: 74px; justify-content: center; margin: 0 auto; max-width: 100%; padding: {{ barPadding }}; position: relative;">
+
+      <nav class="nav" aria-label="Navegacao principal" style="display: {{ desktopNavDisplay }}; align-items: center; gap: {{ barGap }}; flex-shrink: 0;">
+        <a href="./" aria-label="Aline Angela inicio" style="display: flex; align-items: center;">
+          <img alt="Aline Angela Icone Logo" src="assets/aline-icon.webp" style="height: 20px; width: 20px; object-fit: contain; display: block; filter: {{ iconFilter }}; transition: filter 0.55s ease;" />
+        </a>
+        <a class="nav-trigger" href="#sobre" style="color: {{ ink }}; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">SOBRE</a>
+        <a class="nav-trigger" href="Blog.dc.html" style="color: {{ ink }}; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">JOURNAL</a>
+      </nav>
+
+      <a class="search-trigger" aria-label="Buscar conteudos" href="Resultado de Busca.dc.html" style="display: {{ desktopNavDisplay }}; align-items: center; justify-content: center; height: 18px; width: 18px; color: {{ ink }};">
+        <svg aria-hidden="true" viewBox="0 0 20 20" style="height: 100%; width: 100%;">
+          <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+          <line x1="13.1" y1="13.1" x2="18" y2="18" stroke="currentColor" stroke-linecap="round" stroke-width="1.4"></line>
+        </svg>
+      </a>
+
+      <button aria-label="{{ menuButtonLabel }}" onClick="{{ toggleMenu }}" style="display: {{ mobileNavDisplay }}; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: none; padding: 0; cursor: pointer; color: {{ ink }};">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+          <sc-if value="{{ menuOpen }}">
+            <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+            <line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+          </sc-if>
+          <sc-if value="{{ menuClosedIcon }}">
+            <line x1="3.5" y1="7" x2="20.5" y2="7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+            <line x1="3.5" y1="12" x2="20.5" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+            <line x1="3.5" y1="17" x2="20.5" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+          </sc-if>
+        </svg>
+      </button>
+    </div>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position: fixed; inset: 0; top: 0; background: rgba(250, 249, 246, 0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; animation: menuFade 0.2s ease; z-index: 200;">
+        <a class="nav-trigger" href="#sobre" onClick="{{ closeMenu }}" style="color: oklch(0.2 0 0); text-decoration: none; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; letter-spacing: 0.02em; text-transform: none;">Sobre</a>
+        <a class="nav-trigger" href="Blog.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.2 0 0); text-decoration: none; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; letter-spacing: 0.02em; text-transform: none;">Journal</a>
+        <a class="nav-trigger" href="Resultado de Busca.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.2 0 0); text-decoration: none; font-size: 12px; letter-spacing: 0.12em; margin-top: 6px;">BUSCAR</a>
+      </div>
+    </sc-if>
+  </header>
+
+</main>
+
+<section style="position: relative; width: 100%; background: #fff4bc; padding: clamp(64px, 12vw, 120px) 24px; display: flex; align-items: center; justify-content: center;">
+  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 620px; width: 100%; --what-size: clamp(70px, 8vw, 110px);">
+    <h2 style="margin: 0; font-family: 'P22 Dearest', 'Cormorant Garamond', cursive; font-weight: 400; font-size: var(--what-size); color: oklch(0.35 0.01 260); line-height: 1;">What</h2>
+    <div style="margin-top: calc(var(--what-size) * 0.02); width: 31ch; max-width: 100%; margin-left: auto; margin-right: auto;">
+      <p style="margin: 0; font-family: 'Geist Mono', monospace; font-weight: 400; font-size: clamp(11px, 1.6vw, 15px); letter-spacing: 0.14em; text-transform: uppercase; color: oklch(0.4 0.01 260); white-space: nowrap; overflow: hidden; text-align: center;">{{ typedText }}<span style="opacity: {{ cursorOpacity }};">|</span></p>
+      <div style="margin-top: 6px; border-bottom: 1px dashed oklch(0.4 0.01 260 / 0.6); width: 100%;"></div>
+    </div>
+  </div>
+</section>
+
+<section style="position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; box-sizing: border-box; background: #2a251e;">
+  <image-slot id="why-bg" shape="rect" src="assets/why-bg.png" fit="cover" placeholder="Foto de fundo" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;"></image-slot>
+  <div style="position: absolute; inset: 0; background: oklch(0.15 0 0 / 0.4); z-index: 1;"></div>
+  <div style="position: relative; z-index: 2; height: 100%; display: flex; align-items: center; justify-content: center; padding: 48px 24px; box-sizing: border-box;">
+    <div class="why-group">
+      <h2 class="why-title" style="margin: 0; font-family: 'P22 Dearest', 'Cormorant Garamond', cursive; font-weight: 400; color: #fff; line-height: 1;">Why</h2>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.6; color: #fff;">Para imaginar, contemplar,<br/>experimentar, praticar e<br/>aproveitar todo o processo.</p>
+        <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.6; color: #fff;">Para idealizar, planejar, tentar,<br/>documentar e progredir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" style="position: relative; width: 100%; background: #f6f1e6; padding: clamp(48px, 8vw, 100px) clamp(24px, 6vw, 48px); box-sizing: border-box;">
+  <div class="who-grid" style="display: grid; grid-template-columns: 340px 440px; gap: clamp(40px, 7vw, 96px); align-items: stretch; max-width: 860px; margin: 0 auto;">
+    <div class="who-photo-frame">
+      <image-slot id="who-photo" shape="rect" src="assets/who-photo.webp" fit="cover" placeholder="Foto" style="width: 100%; height: 100%; display: block; filter: grayscale(1);"></image-slot>
+      <h2 class="who-title-mobile" style="position: absolute; left: 0px; bottom: -13%; margin: 0; font-family: 'P22 Dearest', 'Cormorant Garamond', cursive; font-weight: 400; font-size: clamp(110px, 34vw, 170px); line-height: 1; color: #f6f1e6; z-index: 2;">Who</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
+      <h2 class="who-title-desktop" style="margin: 0 0 8px; font-family: 'P22 Dearest', 'Cormorant Garamond', cursive; font-weight: 400; line-height: 1; color: oklch(0.4 0.01 260);">Who</h2>
+      <div style="display: flex; flex-direction: column; gap: 16px; flex: 1; justify-content: space-between;">
+        <div class="who-text-block" style="display: flex; flex-direction: column; gap: 16px;">
+          <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 400; font-size: 15px; line-height: 1.7; color: oklch(0.4 0.01 260); text-align: justify; max-width: 40ch;">Brasiliense, filha de pernambucana e mineiro, criada em Curitiba, que morou anos em Itajaí e hoje vive em Gold Coast, Austrália.</p>
+          <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 400; font-size: 15px; line-height: 1.7; color: oklch(0.4 0.01 260); text-align: justify; max-width: 40ch;">Redatora, formada em Marketing e em Nutrição, com pós graduação em Neuropsiconutrição. É o que faço da vida.</p>
+          <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 400; font-size: 15px; line-height: 1.7; color: oklch(0.4 0.01 260); text-align: justify; max-width: 40ch;">Journaling, amar, criar playlists, caminhar para fotografar e conhecer o mundo em detalhes é o que faço para me sentir viva.</p>
+        </div>
+        <a href="#sobre" style="font-family: Inter, Arial, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: oklch(0.5 0.15 260); text-decoration: underline;">Saiba mais</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; background: oklch(0.55 0.12 250); display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box;">
+  <image-slot id="section2-bg" shape="rect" fit="cover" placeholder="Imagem de fundo" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;"></image-slot>
+  <div style="position: relative; width: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 48px; max-width: 1320px; margin: 0 auto;">
+    <button class="carousel-arrow" aria-label="Anterior" onClick="{{ scrollPrev }}" style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #f8f5ec; border: none; cursor: pointer; box-shadow: 0 6px 16px oklch(0.1 0 0 / 0.25); align-items: center; justify-content: center; z-index: 6; font-size: 18px; color: oklch(0.25 0 0);">‹</button>
+    <div class="carousel-viewport" id="blog-carousel-viewport" style="position: relative; flex: 1 1 auto; min-width: 0; overflow: hidden;">
+      <div class="carousel-track" id="blog-carousel-track" style="display: flex; gap: 32px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; max-width: {{ trackMaxWidth }}; margin: 0 auto;">
+        <sc-for list="{{ posts }}" as="post" hint-placeholder-count="3">
+          <div class="carousel-card blog-card" style="scroll-snap-align: start; flex: 0 0 auto; position: relative;">
+            <sc-if value="{{ post.isA }}" hint-placeholder-val="{{ true }}">
+              <img alt="Fita adesiva decorativa" src="assets/tape-a.png" style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 90px; mix-blend-mode: multiply; z-index: 2;" />
+            </sc-if>
+            <sc-if value="{{ post.isB }}" hint-placeholder-val="{{ false }}">
+              <img alt="Fita adesiva decorativa" src="assets/tape-b.png" style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 90px; mix-blend-mode: multiply; z-index: 2;" />
+            </sc-if>
+            <sc-if value="{{ post.isC }}" hint-placeholder-val="{{ false }}">
+              <img alt="Fita adesiva decorativa" src="assets/tape-c.png" style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 90px; mix-blend-mode: multiply; z-index: 2;" />
+            </sc-if>
+            <div style="background: #f8f5ec; border-bottom: 2px dashed oklch(0.25 0 0 / 0.75); padding: 20px 20px 28px;">
+              <div class="photo-frame post-photo-frame" style="width: 100%; overflow: hidden; filter: grayscale(1); transition: filter 0.4s ease;">
+                <image-slot id="{{ post.photoId }}" shape="rect" placeholder="Foto do post" style="width: 100%; height: 100%; display: block;"></image-slot>
+              </div>
+              <h3 style="margin: 26px 0 0; font-family: Inter, Arial, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.3; letter-spacing: normal; color: oklch(0.18 0 0); text-align: center;">{{ post.title }}</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr);">
+              <sc-for list="{{ post.tabs }}" as="tab" hint-placeholder-count="5">
+                <div class="tab-btn" style="height: 120px; border-right: {{ tab.borderRight }}; opacity: {{ tab.opacity }};">
+                  <sc-if value="{{ tab.visible }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ tab.onClick }}" aria-label="Ler mais" style="cursor: pointer; width: 100%; height: 100%; background: transparent; border: none; display: flex; align-items: center; justify-content: center; padding: 0; transform: {{ tab.transform }}; transition: transform 0.22s ease;">
+                      <span class="tab-label" style="writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap;">LER MAIS</span>
+                    </button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div class="carousel-fade" style="position: absolute; top: 0; right: 0; bottom: 0; width: 70px; background: linear-gradient(to right, transparent, oklch(0.55 0.12 250)); pointer-events: none; z-index: 5;"></div>
+    </div>
+    <button class="carousel-arrow" aria-label="Próximo" onClick="{{ scrollNext }}" style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #f8f5ec; border: none; cursor: pointer; box-shadow: 0 6px 16px oklch(0.1 0 0 / 0.25); align-items: center; justify-content: center; z-index: 6; font-size: 18px; color: oklch(0.25 0 0);">›</button>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const INK_DARK = "oklch(0.22 0 0)";
+const INK_LIGHT = "oklch(0.99 0 0)";
+const LINE = "oklch(0.85 0 0 / 0.6)";
+const PHRASES = ["Processos criativos", "Inspirações de rotina", "Diário de campo"];
+
+const POST_URL = "Blog Post.dc.html";
+const TAPES = ["assets/tape-a.png", "assets/tape-b.png", "assets/tape-c.png"];
+const POST_COUNT = 6;
+
+class Component extends DCLogic {
+  state = { menuOpen: false, isScrolled: false, typedText: "", cursorOn: true, tearing: {}, removed: {}, itemsPerView: 3 };
+  trackRef = React.createRef();
+
+  getStep() {
+    const el = document.getElementById("blog-carousel-track");
+    if (!el) return this.state.itemsPerView * 352;
+    const card = el.querySelector(".carousel-card");
+    if (!card) return this.state.itemsPerView * 352;
+    const gap = parseFloat(getComputedStyle(el).gap) || 0;
+    return this.state.itemsPerView * (card.getBoundingClientRect().width + gap);
+  }
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const scrolled = window.scrollY > 100;
+      if (scrolled !== this.state.isScrolled) this.setState({ isScrolled: scrolled });
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+
+    this.setState({ itemsPerView: this.computeItemsPerView() });
+    this.onResize = () => this.setState({ itemsPerView: this.computeItemsPerView() });
+    window.addEventListener("resize", this.onResize);
+
+    this.cursorTimer = setInterval(() => {
+      this.setState(s => ({ cursorOn: !s.cursorOn }));
+    }, 500);
+
+    this.phraseIndex = 0;
+    this.runTyping();
+  }
+
+  runTyping() {
+    const phrase = PHRASES[this.phraseIndex % PHRASES.length];
+    let i = 0;
+    const typeStep = () => {
+      i++;
+      this.setState({ typedText: phrase.slice(0, i) });
+      if (i < phrase.length) {
+        this.typeTimer = setTimeout(typeStep, 70);
+      } else {
+        this.typeTimer = setTimeout(() => this.deletePhrase(phrase), 1400);
+      }
+    };
+    typeStep();
+  }
+
+  deletePhrase(phrase) {
+    let i = phrase.length;
+    const delStep = () => {
+      i--;
+      this.setState({ typedText: phrase.slice(0, i) });
+      if (i > 0) {
+        this.typeTimer = setTimeout(delStep, 40);
+      } else {
+        this.phraseIndex++;
+        this.typeTimer = setTimeout(() => this.runTyping(), 400);
+      }
+    };
+    delStep();
+  }
+
+  computeItemsPerView() {
+    const viewport = document.getElementById("blog-carousel-viewport");
+    const available = viewport ? viewport.clientWidth : window.innerWidth;
+    const CARD = 320, GAP = 32;
+    const fit = Math.max(1, Math.floor((available + GAP) / (CARD + GAP)));
+    return Math.min(fit, 3);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
+    clearInterval(this.cursorTimer);
+    clearTimeout(this.typeTimer);
+  }
+
+  renderVals() {
+    const s = this.state.isScrolled;
+    return {
+      ink: s ? INK_LIGHT : INK_DARK,
+      iconFilter: s ? "brightness(0) invert(1)" : "none",
+      menuOpen: this.state.menuOpen,
+      menuClosedIcon: !this.state.menuOpen,
+      menuButtonLabel: this.state.menuOpen ? "Fechar menu" : "Abrir menu",
+      desktopNavDisplay: "var(--desktop-display, flex)",
+      mobileNavDisplay: "var(--mobile-display, none)",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+
+      headerPadding: s ? "12px 12px 0" : "0",
+      barBackground: s ? "rgba(250, 249, 246, 0.18)" : "rgba(250, 249, 246, 0.96)",
+      barBlur: s ? "blur(16px)" : "blur(0)",
+      barBorder: s ? `1px solid ${LINE}` : "1px solid transparent",
+      barBorderBottom: `1px solid ${LINE}`,
+      barRadius: s ? "999px" : "0px",
+      barShadow: s ? "0 10px 26px rgba(32, 32, 29, 0.08)" : "none",
+      barGap: "clamp(24px, 4vw, 44px)",
+      barMaxWidth: s ? "360px" : "100%",
+      barPadding: "0 40px",
+      navGap: "clamp(22px, 3vw, 34px)",
+
+      typedText: this.state.typedText,
+      cursorOpacity: this.state.cursorOn ? 1 : 0,
+
+      trackMaxWidth: `${this.state.itemsPerView * 320 + (this.state.itemsPerView - 1) * 32}px`,
+
+      posts: Array.from({ length: POST_COUNT }, (_, p) => ({
+        photoId: `post-${p}-photo`,
+        isA: p % 3 === 0,
+        isB: p % 3 === 1,
+        isC: p % 3 === 2,
+        title: "Título de um blog post interessante sobre algo que deve será",
+        tabs: [0, 1, 2, 3, 4].map(t => {
+          const key = `${p}-${t}`;
+          return {
+            visible: !this.state.removed[key],
+            opacity: this.state.tearing[key] ? 0 : 1,
+            transform: this.state.tearing[key] ? "translateY(14px) rotate(-4deg)" : "none",
+            borderRight: t === 4 ? "none" : "2px dashed oklch(0.25 0 0 / 0.75)",
+            onClick: () => {
+              this.setState(s => ({ tearing: { ...s.tearing, [key]: true } }));
+              setTimeout(() => {
+                this.setState(s => ({ removed: { ...s.removed, [key]: true } }));
+                window.location.href = POST_URL;
+              }, 220);
+            },
+          };
+        }),
+      })),
+
+      scrollPrev: () => {
+        const el = document.getElementById("blog-carousel-track");
+        if (!el) return;
+        el.scrollBy({ left: -this.getStep(), behavior: "smooth" });
+      },
+      scrollNext: () => {
+        const el = document.getElementById("blog-carousel-track");
+        if (!el) return;
+        el.scrollBy({ left: this.getStep(), behavior: "smooth" });
+      },
+      hoverPrevStart: () => {
+        clearTimeout(this.hoverTimer);
+        this.hoverTimer = setTimeout(() => {
+          const el = document.getElementById("blog-carousel-track");
+          if (el) el.scrollBy({ left: -this.getStep(), behavior: "smooth" });
+        }, 400);
+      },
+      hoverNextStart: () => {
+        clearTimeout(this.hoverTimer);
+        this.hoverTimer = setTimeout(() => {
+          const el = document.getElementById("blog-carousel-track");
+          if (el) el.scrollBy({ left: this.getStep(), behavior: "smooth" });
+        }, 400);
+      },
+      hoverEnd: () => {
+        clearTimeout(this.hoverTimer);
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -14,7 +14,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; background: oklch(0.16 0 0); }
+    html, body { margin: 0; max-width: 100%; overflow-x: hidden; background: oklch(0.16 0 0); }
+    body { position: relative; }
+    x-dc { display: block; max-width: 100%; overflow: hidden; }
     .nav-trigger, .search-trigger, .icon-btn { transition: opacity 0.2s ease; }
     .nav-trigger:hover, .search-trigger:hover, .icon-btn:hover { opacity: 0.6; }
     .photo-frame { transition: filter 0.4s ease; }
@@ -46,6 +48,26 @@
     .aa-hero { --desktop-display: flex; --mobile-display: none; }
     @media (max-width: 720px) {
       .aa-hero { --desktop-display: none; --mobile-display: flex; }
+      .aa-hero { height: 92svh !important; min-height: 560px !important; max-height: 760px; }
+      .aa-hero > img { object-position: 54% 32% !important; }
+      .site-header { height: 68px !important; padding: 0 12px; box-sizing: border-box; }
+      .nav-shell { left: 12px !important; right: 12px !important; width: auto !important; max-width: none !important; height: 48px !important; margin-top: 10px !important; }
+      .nav-content { height: 68px !important; padding: 0 18px !important; }
+      .mobile-menu-button { width: 36px !important; height: 36px !important; }
+      .mobile-menu-panel { background: #f8f5ec !important; gap: 28px !important; }
+      .why-group { max-width: calc(100vw - 40px); }
+      .why-title { font-size: clamp(72px, 23vw, 112px) !important; }
+      .about-section { padding: 56px 24px 72px !important; }
+      .who-grid { max-width: none !important; width: 100%; }
+      .who-title-mobile { left: -4px !important; bottom: -11% !important; font-size: clamp(88px, 30vw, 132px) !important; }
+      .who-text-block p { font-size: 15px !important; line-height: 1.65 !important; text-align: left !important; }
+      .blog-section { min-height: 660px !important; height: auto !important; padding: 84px 20px 72px !important; align-items: flex-start !important; }
+      .carousel-shell { gap: 0 !important; max-width: calc(100vw - 40px) !important; }
+      .carousel-viewport { width: 100% !important; overflow: hidden !important; }
+      .carousel-track { gap: 20px !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .carousel-card { width: calc(100vw - 40px) !important; max-width: 360px; }
+      .carousel-fade { display: none !important; }
+      .tab-btn { height: 92px !important; }
     }
     .who-photo-frame { position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid oklch(0.3 0 0 / 0.25); }
     .who-title-desktop { display: block; font-size: clamp(70px, 8vw, 110px) !important; }
@@ -78,9 +100,9 @@
   <img alt="Retrato em preto e branco" src="assets/hero-bg.webp" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65% 30%;" />
   <div style="position: absolute; inset: 0; background: linear-gradient(180deg, oklch(0.14 0 0 / 0.25) 0%, oklch(0.14 0 0 / 0) 30%, oklch(0.14 0 0 / 0) 78%, oklch(0.14 0 0 / 0.3) 100%);"></div>
 
-  <header style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; height: 74px;">
-    <div style="position: absolute; inset: 0; margin: 12px auto 0; max-width: {{ barMaxWidth }}; height: 50px; background: {{ barBackground }}; backdrop-filter: {{ barBlur }}; -webkit-backdrop-filter: {{ barBlur }}; border: {{ barBorder }}; border-bottom: {{ barBorderBottom }}; border-radius: {{ barRadius }}; box-shadow: {{ barShadow }}; transition: background 0.55s ease, border-color 0.55s ease, border-radius 0.55s ease, box-shadow 0.55s ease, backdrop-filter 0.55s ease, max-width 0.55s ease;"></div>
-    <div style="align-items: center; display: flex; gap: {{ barGap }}; height: 74px; justify-content: center; margin: 0 auto; max-width: 100%; padding: {{ barPadding }}; position: relative;">
+  <header class="site-header" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; height: 74px;">
+    <div class="nav-shell" style="position: absolute; inset: 0; margin: 12px auto 0; max-width: {{ barMaxWidth }}; height: 50px; background: {{ barBackground }}; backdrop-filter: {{ barBlur }}; -webkit-backdrop-filter: {{ barBlur }}; border: {{ barBorder }}; border-bottom: {{ barBorderBottom }}; border-radius: {{ barRadius }}; box-shadow: {{ barShadow }}; transition: background 0.55s ease, border-color 0.55s ease, border-radius 0.55s ease, box-shadow 0.55s ease, backdrop-filter 0.55s ease, max-width 0.55s ease;"></div>
+    <div class="nav-content" style="align-items: center; display: flex; gap: {{ barGap }}; height: 74px; justify-content: center; margin: 0 auto; max-width: 100%; padding: {{ barPadding }}; position: relative;">
 
       <nav class="nav" aria-label="Navegacao principal" style="display: {{ desktopNavDisplay }}; align-items: center; gap: {{ barGap }}; flex-shrink: 0;">
         <a href="./" aria-label="Aline Angela inicio" style="display: flex; align-items: center;">
@@ -97,7 +119,7 @@
         </svg>
       </a>
 
-      <button aria-label="{{ menuButtonLabel }}" onClick="{{ toggleMenu }}" style="display: {{ mobileNavDisplay }}; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: none; padding: 0; cursor: pointer; color: {{ ink }};">
+      <button class="mobile-menu-button" aria-label="{{ menuButtonLabel }}" onClick="{{ toggleMenu }}" style="display: {{ mobileNavDisplay }}; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: none; padding: 0; cursor: pointer; color: {{ ink }};">
         <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
           <sc-if value="{{ menuOpen }}">
             <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
@@ -113,7 +135,7 @@
     </div>
 
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-      <div style="position: fixed; inset: 0; top: 0; background: rgba(250, 249, 246, 0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; animation: menuFade 0.2s ease; z-index: 200;">
+      <div class="mobile-menu-panel" style="position: fixed; inset: 0; top: 0; background: rgba(250, 249, 246, 0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; animation: menuFade 0.2s ease; z-index: 200;">
         <a class="nav-trigger" href="#sobre" onClick="{{ closeMenu }}" style="color: oklch(0.2 0 0); text-decoration: none; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; letter-spacing: 0.02em; text-transform: none;">Sobre</a>
         <a class="nav-trigger" href="Blog.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.2 0 0); text-decoration: none; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; letter-spacing: 0.02em; text-transform: none;">Journal</a>
         <a class="nav-trigger" href="Resultado de Busca.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.2 0 0); text-decoration: none; font-size: 12px; letter-spacing: 0.12em; margin-top: 6px;">BUSCAR</a>
@@ -147,7 +169,7 @@
   </div>
 </section>
 
-<section id="sobre" style="position: relative; width: 100%; background: #f6f1e6; padding: clamp(48px, 8vw, 100px) clamp(24px, 6vw, 48px); box-sizing: border-box;">
+<section id="sobre" class="about-section" style="position: relative; width: 100%; background: #f6f1e6; padding: clamp(48px, 8vw, 100px) clamp(24px, 6vw, 48px); box-sizing: border-box;">
   <div class="who-grid" style="display: grid; grid-template-columns: 340px 440px; gap: clamp(40px, 7vw, 96px); align-items: stretch; max-width: 860px; margin: 0 auto;">
     <div class="who-photo-frame">
       <image-slot id="who-photo" shape="rect" src="assets/who-photo.webp" fit="cover" placeholder="Foto" style="width: 100%; height: 100%; display: block; filter: grayscale(1);"></image-slot>
@@ -167,9 +189,9 @@
   </div>
 </section>
 
-<section style="position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; background: oklch(0.55 0.12 250); display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box;">
+<section class="blog-section" style="position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; background: oklch(0.55 0.12 250); display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box;">
   <image-slot id="section2-bg" shape="rect" fit="cover" placeholder="Imagem de fundo" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;"></image-slot>
-  <div style="position: relative; width: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 48px; max-width: 1320px; margin: 0 auto;">
+  <div class="carousel-shell" style="position: relative; width: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 48px; max-width: 1320px; margin: 0 auto;">
     <button class="carousel-arrow" aria-label="Anterior" onClick="{{ scrollPrev }}" style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #f8f5ec; border: none; cursor: pointer; box-shadow: 0 6px 16px oklch(0.1 0 0 / 0.25); align-items: center; justify-content: center; z-index: 6; font-size: 18px; color: oklch(0.25 0 0);">‹</button>
     <div class="carousel-viewport" id="blog-carousel-viewport" style="position: relative; flex: 1 1 auto; min-width: 0; overflow: hidden;">
       <div class="carousel-track" id="blog-carousel-track" style="display: flex; gap: 32px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; max-width: {{ trackMaxWidth }}; margin: 0 auto;">
@@ -300,22 +322,23 @@ class Component extends DCLogic {
 
   renderVals() {
     const s = this.state.isScrolled;
+    const menuOpen = this.state.menuOpen;
     return {
-      ink: s ? INK_LIGHT : INK_DARK,
-      iconFilter: s ? "brightness(0) invert(1)" : "none",
-      menuOpen: this.state.menuOpen,
-      menuClosedIcon: !this.state.menuOpen,
-      menuButtonLabel: this.state.menuOpen ? "Fechar menu" : "Abrir menu",
+      ink: menuOpen ? INK_DARK : (s ? INK_LIGHT : INK_DARK),
+      iconFilter: s && !menuOpen ? "brightness(0) invert(1)" : "none",
+      menuOpen,
+      menuClosedIcon: !menuOpen,
+      menuButtonLabel: menuOpen ? "Fechar menu" : "Abrir menu",
       desktopNavDisplay: "var(--desktop-display, flex)",
       mobileNavDisplay: "var(--mobile-display, none)",
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
 
       headerPadding: s ? "12px 12px 0" : "0",
-      barBackground: s ? "rgba(250, 249, 246, 0.18)" : "rgba(250, 249, 246, 0.96)",
-      barBlur: s ? "blur(16px)" : "blur(0)",
-      barBorder: s ? `1px solid ${LINE}` : "1px solid transparent",
-      barBorderBottom: `1px solid ${LINE}`,
+      barBackground: menuOpen ? "rgba(248, 245, 236, 0.98)" : (s ? "rgba(250, 249, 246, 0.18)" : "rgba(250, 249, 246, 0.96)"),
+      barBlur: menuOpen ? "blur(0)" : (s ? "blur(16px)" : "blur(0)"),
+      barBorder: menuOpen ? "1px solid rgba(30, 27, 24, 0.12)" : (s ? `1px solid ${LINE}` : "1px solid transparent"),
+      barBorderBottom: menuOpen ? "1px solid rgba(30, 27, 24, 0.12)" : `1px solid ${LINE}`,
       barRadius: s ? "999px" : "0px",
       barShadow: s ? "0 10px 26px rgba(32, 32, 29, 0.08)" : "none",
       barGap: "clamp(24px, 4vw, 44px)",

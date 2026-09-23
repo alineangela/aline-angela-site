@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/webp" href="assets/aline-angela-logo-icone.webp">
+<script src="./support.js"></script>
+<script src="./media-protection.js"></script>
+<link rel="stylesheet" href="./mobile-responsive.css?v=20260825-2">
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#1a1a1a"/><text x="60" y="66" font-family="serif" font-size="20" fill="#f9e79b" text-anchor="middle">AA</text></svg></template>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html { overflow-x: hidden; }
+    body { margin: 0; background: #f6f1e6; }
+    .nav-trigger, .search-trigger, .icon-btn { transition: opacity 0.2s ease; }
+    .nav-trigger:hover, .search-trigger:hover, .icon-btn:hover { opacity: 0.6; }
+    .photo-frame { transition: filter 0.4s ease; }
+    .post-photo-frame { aspect-ratio: 4 / 3; }
+    @media (max-width: 480px) {
+      .post-photo-frame { aspect-ratio: 1 / 1; }
+    }
+    .blog-card:hover .photo-frame { filter: grayscale(0) !important; }
+    .tab-btn { background-color: rgba(248, 245, 236, 1); box-sizing: border-box; transition: background-color 0.2s ease, opacity 0.2s ease; }
+    .tab-btn:hover { background-color: rgba(248, 245, 236, 0.8) !important; }
+    .tab-btn:hover .tab-label { color: oklch(0.3 0 0 / 0.35) !important; }
+    .tab-label { font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; color: oklch(0.3 0 0); transition: color 0.2s ease; }
+    .carousel-track { scrollbar-width: none; }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-card { width: min(320px, calc(100vw - 64px)); flex-shrink: 0; }
+    .carousel-fade { display: none; }
+    .carousel-arrow { display: flex; transition: opacity 0.2s ease, transform 0.2s ease; }
+    .carousel-arrow:hover { opacity: 0.85; transform: scale(1.06); }
+    @media (max-width: 720px) {
+      .carousel-fade { display: block; }
+      .carousel-arrow { display: none; }
+    }
+    .why-group { display: flex; align-items: center; gap: clamp(28px, 5vw, 56px); width: fit-content; max-width: 90vw; margin: 0 auto; }
+    .why-title { font-size: clamp(56px, 14vw, 110px); }
+    .who-nav-link:hover { color: #fff; text-shadow: 0 0 6px #fff, 0 0 18px oklch(1 0 0 / 0.85), 0 0 36px oklch(0.9 0 0 / 0.7); }
+    .decorative { user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+    .journal-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: linear-gradient(to bottom, oklch(0 0 0 / 0.9) 0%, oklch(0 0 0 / 0.87) 28%, oklch(0 0 0 / 0.82) 45%, oklch(0 0 0 / 0.76) 62%, oklch(0 0 0 / 0.68) 78%, oklch(0 0 0 / 0.58) 90%, oklch(0 0 0 / 0.48) 100%); z-index: 90; pointer-events: none; }
+    .journal-panel { position: absolute; top: 100%; z-index: 95; pointer-events: none; }
+    .journal-panel-inner { display: flex; flex-direction: column; gap: 4px; padding-top: 12px; pointer-events: auto; opacity: 0; animation: journal-fade-in 0.3s ease forwards; }
+    .journal-row { display: flex; align-items: center; gap: 10px; min-height: 20px; line-height: 1; font-family: 'Geist Mono'; font-size: 13px; letter-spacing: 0.1em; white-space: nowrap; color: #fff; }
+    @keyframes journal-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .journal-cat { cursor: pointer; color: #fff; transition: color 0.15s ease; text-transform: uppercase; }
+    .journal-cat.active { color: #f9e79b; }
+    .journal-sep { color: oklch(1 0 0 / 0.4); }
+    .journal-plus { text-decoration: none; box-sizing: border-box; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1px solid oklch(1 0 0 / 0.4); color: oklch(1 0 0 / 0.4); font-size: 12px; line-height: 20px; padding: 0; cursor: pointer; transition: color 0.15s ease, border-color 0.15s ease; flex-shrink: 0; }
+    .journal-plus:hover { color: #f9e79b; border-color: #f9e79b; }
+    .journal-subs { display: flex; align-items: center; gap: 10px; }
+    .journal-sub { cursor: pointer; color: oklch(1 0 0 / 0.45); transition: color 0.15s ease; text-decoration: none; border-bottom: none; }
+    .journal-sub:hover { color: #f9e79b; }
+    .work-item { cursor: pointer; color: #fff; transition: color 0.15s ease; text-transform: uppercase; }
+    .work-item:hover { color: #f9e79b; }
+    .what-title { font-size: clamp(56px, 14vw, 110px); }
+    @media (max-width: 560px) {
+      .why-group { flex-direction: column; text-align: center; }
+      .why-title { font-size: clamp(90px, 26vw, 130px); }
+      .what-title { font-size: clamp(90px, 26vw, 130px); }
+    }
+    .aa-hero { --desktop-display: flex; --mobile-display: none; }
+    @media (max-width: 720px) {
+      .aa-hero { --desktop-display: none; --mobile-display: flex; }
+    }
+    .who-photo-frame { position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid oklch(0.3 0 0 / 0.25); }
+    .who-photo-frame image-slot { filter: grayscale(1); transition: filter 0.6s ease; }
+    .who-photo-frame.in-view image-slot { filter: grayscale(0); }
+    .who-grid { grid-template-areas: "photo text"; }
+    .who-photo-frame { grid-area: photo; }
+    .who-text-col { grid-area: text; }
+    .who-title-desktop { display: block; font-size: clamp(56px, 14vw, 110px) !important; }
+    .who-title-mobile { display: none; }
+    .who-cta { display: inline-flex; align-items: center; justify-content: center; font-family: Inter, Arial, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: 1px dashed oklch(0.4 0.01 260 / 0.7); border-radius: 999px; padding: 14px 32px; color: oklch(0.35 0.01 260); background: transparent; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+    .who-cta:hover { background: oklch(0.22 0 0 / 0.62); color: #fff; border-color: oklch(0.22 0 0 / 0.5); }
+    .sobre-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .sobre-reveal.ready { opacity: 1; transform: translateY(0); }
+    .who-cta-mobile { display: none; }
+    @media (max-width: 768px) {
+      .who-grid { grid-template-columns: 1fr 1.7fr !important; grid-template-areas: "photo photo" "title text"; max-width: 420px; margin: 0 auto; }
+      .who-photo-frame { aspect-ratio: 1 / 1; border: none; }
+      .who-title-desktop { display: none; }
+      .who-title-block-mobile { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; grid-area: title; }
+      .who-title-mobile { display: block; position: static; margin: 0; align-self: start; font-family: 'P22 Dearest', 'Cormorant Garamond', cursive; font-weight: 400; font-size: clamp(90px, 26vw, 130px); line-height: 0.6; color: oklch(0.4 0.01 260); }
+      .who-text-block p { max-width: none !important; width: 100%; }
+      .who-cta-desktop { display: none; }
+      .who-cta-mobile { display: inline-flex; }
+    }
+    @font-face {
+      font-family: 'P22 Dearest';
+      src: url('assets/P22DearestPro.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/GeistMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Les Romantic';
+      src: url('assets/les-romantic.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    .hero-name-desktop { display: block; }
+    .hero-name-mobile { display: none; }
+    @media (max-width: 720px) {
+      .hero-name-desktop { display: none; }
+      .hero-name-mobile { display: flex; }
+    }
+    @keyframes hero-name-rise { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .footer-link:hover { color: #f9e79b !important; }
+    .footer-ig:hover { color: #f9e79b; border-color: #f9e79b; }
+    @media (max-width: 560px) {
+      .site-footer-nav { flex-wrap: wrap; gap: 16px 20px !important; }
+      .site-footer-nav .footer-ig { order: 5; flex-basis: 100%; margin: 2px auto 0; }
+    }
+</style>
+  <script src="./image-slot.js"></script>
+</helmet>
+
+<main class="aa-hero" style="position: relative; width: 100%; font-family: Inter, Arial, sans-serif;">
+
+  <header style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; height: 74px;">
+    <div style="position: absolute; inset: 0; margin: 12px auto 0; max-width: {{ barMaxWidth }}; height: 50px; background: {{ barBackground }}; backdrop-filter: {{ barBlur }}; -webkit-backdrop-filter: {{ barBlur }}; border: {{ barBorder }}; border-bottom: {{ barBorderBottom }}; border-radius: {{ barRadius }}; box-shadow: {{ barShadow }}; z-index: 96; transition: background 0.55s ease, border-color 0.55s ease, border-radius 0.55s ease, box-shadow 0.55s ease, backdrop-filter 0.55s ease, max-width 0.55s ease;"></div>
+    <div style="align-items: center; display: flex; gap: {{ barGap }}; height: 74px; justify-content: center; margin: 0 auto; max-width: 100%; padding: {{ barPadding }}; position: relative; z-index: 97;">
+
+      <nav class="nav" aria-label="Navegacao principal" style="display: {{ desktopNavDisplay }}; align-items: center; gap: {{ barGap }}; flex-shrink: 0;">
+        <a href="Aline Angela Site.dc.html" aria-label="Aline Angela inicio" style="display: flex; align-items: center;">
+          <img alt="Icone do logotipo Aline Angela" src="assets/aline-angela-logo-icone.webp" draggable="false" style="height: 20px; width: 20px; object-fit: contain; display: block; -webkit-user-drag: none; user-select: none; filter: {{ iconFilter }}; transition: filter 0.25s ease;" />
+        </a>
+        <a class="nav-trigger" href="Sobre.dc.html" style="color: {{ ink }}; transition: color 0.25s ease; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">SOBRE</a>
+        <span id="nav-menu-zone" style="position: relative; display: inline-flex; align-items: center; gap: {{ barGap }};">
+          <a class="nav-trigger" href="Journal.dc.html" id="journal-nav-trigger" onMouseEnter="{{ openJournalTab }}" style="color: {{ ink }}; transition: color 0.25s ease; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">JOURNAL</a>
+          <a class="nav-trigger" href="Work.dc.html" id="work-nav-trigger" onMouseEnter="{{ openWorkTab }}" style="color: {{ ink }}; transition: color 0.25s ease; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">WORK</a>
+        </span>
+      </nav>
+
+      <a class="search-trigger" aria-label="Buscar conteudos" href="Resultado de Busca.dc.html" style="display: {{ desktopNavDisplay }}; align-items: center; justify-content: center; height: 18px; width: 18px; color: {{ ink }}; transition: color 0.25s ease;">
+        <svg aria-hidden="true" viewBox="0 0 20 20" style="height: 100%; width: 100%;">
+          <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+          <line x1="13.1" y1="13.1" x2="18" y2="18" stroke="currentColor" stroke-linecap="round" stroke-width="1.4"></line>
+        </svg>
+      </a>
+      <a class="mobile-home-logo" href="Aline Angela Site.dc.html" aria-label="Aline Angela inicio" style="display: {{ mobileNavDisplay }}; align-items: center; justify-content: center; height: 32px; width: 32px;">
+        <img alt="Icone do logotipo Aline Angela" src="assets/aline-angela-logo-icone.webp" draggable="false" style="height: 20px; width: 20px; object-fit: contain; display: block; -webkit-user-drag: none; user-select: none; filter: {{ iconFilter }}; transition: filter 0.25s ease;" />
+      </a>
+
+      <button class="mobile-menu-button" aria-label="{{ menuButtonLabel }}" onClick="{{ toggleMenu }}" style="display: {{ mobileNavDisplay }}; position: fixed; top: 21px; right: clamp(18px, 5vw, 30px); z-index: 101; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: none; padding: 0; cursor: pointer; color: {{ ink }}; transition: color 0.25s ease, opacity 0.2s ease;">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+          <line x1="3.5" y1="7" x2="20.5" y2="7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+          <line x1="3.5" y1="12" x2="20.5" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+          <line x1="3.5" y1="17" x2="20.5" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+        </svg>
+      </button>
+    </div>
+
+    <sc-if value="{{ navMenuOpen }}" hint-placeholder-val="{{ false }}">
+      <div id="nav-menu-surface">
+        <div class="journal-overlay"></div>
+        <div class="journal-panel" style="left: {{ panelLeft }}px;">
+          <sc-if value="{{ isJournalTab }}" hint-placeholder-val="{{ true }}">
+            <div class="journal-panel-inner">
+              <sc-for list="{{ journalCategories }}" as="cat" hint-placeholder-count="5">
+                <div class="journal-row" onMouseEnter="{{ cat.onEnter }}">
+                  <span class="journal-cat {{ cat.activeClass }}"><a href="{{ cat.href }}" style="color: inherit; text-decoration: none;">{{ cat.name }}</a></span>
+                  <sc-if value="{{ cat.isActive }}" hint-placeholder-val="{{ false }}">
+                    <span class="journal-subs">
+                      <sc-for list="{{ cat.subs }}" as="sub" hint-placeholder-count="2">
+                        <span class="journal-sep">|</span>
+                        <a href="{{ sub.href }}" class="journal-sub" style="text-decoration: none;">{{ sub.label }}</a>
+                      </sc-for>
+                      <span class="journal-sep">|</span>
+                      <a href="{{ cat.href }}" class="journal-plus" aria-label="Ver todos em {{ cat.name }}">+</a>
+                    </span>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isWorkTab }}" hint-placeholder-val="{{ false }}">
+            <div class="journal-panel-inner">
+              <div class="journal-row" onMouseEnter="{{ onPortfolioEnter }}">
+                <a href="Portfolio.dc.html" class="work-item" style="text-decoration: none;">Portfólio</a>
+                <sc-if value="{{ portfolioHover }}" hint-placeholder-val="{{ false }}">
+                  <span class="journal-sep">|</span>
+                  <a href="Case.dc.html" class="journal-sub" style="text-decoration: none;">case</a>
+                </sc-if>
+              </div>
+              <div class="journal-row" onMouseEnter="{{ onServicosEnter }}">
+                <a href="Servicos.dc.html" class="work-item" style="text-decoration: none;">Serviços</a>
+                <sc-if value="{{ servicosHover }}" hint-placeholder-val="{{ false }}">
+                  <span class="journal-sep">|</span>
+                  <span class="journal-sub">SEO</span>
+                  <span class="journal-sep">|</span>
+                  <span class="journal-sub">UX</span>
+                  <span class="journal-sep">|</span>
+                  <span class="journal-sub">UGC</span>
+                </sc-if>
+              </div>
+              <div class="journal-row" onMouseEnter="{{ onProdutosEnter }}">
+                <a href="Produtos.dc.html" class="work-item" style="text-decoration: none;">Produtos</a>
+                <sc-if value="{{ produtosHover }}" hint-placeholder-val="{{ false }}">
+                  <span class="journal-sep">|</span>
+                  <span class="journal-sub">Ponto A</span>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div class="mobile-menu-overlay" style="position: fixed; inset: 0; top: 0; background: rgba(248, 245, 236, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; animation: menuFade 0.2s ease; z-index: 200;">
+        <button class="mobile-menu-close" type="button" aria-label="Fechar menu" onClick="{{ closeMenu }}" style="position: absolute; top: 38px; left: 50%; transform: translateX(-50%) rotate(45deg); display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid oklch(0.24 0 0 / 0.58); background: transparent; color: oklch(0.24 0 0 / 0.58); font-family: Inter, Arial, sans-serif; font-weight: 800; font-size: 18px; line-height: 1; padding: 0; cursor: pointer;">+</button>
+        <a class="nav-trigger mobile-menu-link" href="Aline Angela Site.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.18 0 0 / 0.9); text-decoration: none; font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase;">Início</a>
+        <a class="nav-trigger mobile-menu-link" href="Sobre.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.18 0 0 / 0.9); text-decoration: none; font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase;">Sobre</a>
+        <a class="nav-trigger mobile-menu-link" href="Journal.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.18 0 0 / 0.9); text-decoration: none; font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase;">Journal</a>
+        <a class="nav-trigger mobile-menu-link" href="Work.dc.html" onClick="{{ closeMenu }}" style="color: oklch(0.18 0 0 / 0.9); text-decoration: none; font-family: Inter, Arial, sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase;">Work</a>
+        <a class="search-trigger mobile-menu-search" aria-label="Buscar conteudos" href="Resultado de Busca.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; justify-content: center; height: 22px; width: 22px; color: oklch(0.18 0 0 / 0.9); margin-top: 8px; transition: opacity 0.2s ease;">
+          <svg aria-hidden="true" viewBox="0 0 20 20" style="height: 100%; width: 100%;">
+            <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+            <line x1="13.1" y1="13.1" x2="18" y2="18" stroke="currentColor" stroke-linecap="round" stroke-width="1.4"></line>
+          </svg>
+        </a>
+      </div>
+    </sc-if>
+  </header>
+
+</main>
+
+<section data-nav-theme="light" style="position: relative; width: 100%; min-height: 100vh; background: #f6f1e6; box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: 215px 24px 48px;">
+  <image-slot id="sobre-bg" shape="rect" src="assets/textura-papel-branco-editorial.webp" fit="cover" placeholder="Textura de fundo" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5; z-index: 0;" alt="Textura de papel branco para fundo editorial"></image-slot>
+  <div class="{{ sobreRevealClass }}" style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 560px; width: 100%; gap: 20px;">
+    <h1 style="margin: 0; font-family: 'P22 Dearest', 'Cormorant Garamond', cursive; font-weight: 400; font-size: clamp(80px, 14vw, 150px); line-height: 1; color: oklch(0.35 0.01 260);">Work</h1>
+    <h2 style="margin: 0; font-family: 'Geist Mono'; font-weight: 400; font-size: clamp(11px, 1.6vw, 14px); letter-spacing: 0.14em; text-transform: uppercase; color: oklch(0.4 0.01 260);">Esta página está em construção</h2>
+    <div style="width: min(340px, 60vw); border-bottom: 1px dashed oklch(0.4 0.01 260 / 0.6);"></div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;">
+      <h3 style="margin: 0; font-family: 'Geist Mono'; font-weight: 400; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.4 0.01 260 / 0.65);">Portfólio</h3>
+      <span style="color: oklch(0.4 0.01 260 / 0.35);">|</span>
+      <h3 style="margin: 0; font-family: 'Geist Mono'; font-weight: 400; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.4 0.01 260 / 0.65);">Serviços</h3>
+      <span style="color: oklch(0.4 0.01 260 / 0.35);">|</span>
+      <h3 style="margin: 0; font-family: 'Geist Mono'; font-weight: 400; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.4 0.01 260 / 0.65);">Produtos</h3>
+    </div>
+    <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 400; font-size: 15px; line-height: 1.7; color: oklch(0.4 0.01 260); max-width: 42ch;">O conteúdo completo estará disponível em breve. Fique à vontade para explorar outras páginas.</p>
+    <a href="Aline Angela Site.dc.html" class="who-cta">Voltar ao início</a>
+  </div>
+</section>
+
+<footer data-nav-theme="dark" style="position: relative; width: 100%; background: oklch(0.22 0 0); box-sizing: border-box; padding: clamp(56px, 8vw, 96px) clamp(24px, 6vw, 64px) 32px;">
+  <div style="max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;">
+    <span style="font-family: 'Les Romantic', cursive; font-weight: 400; font-size: 34px; color: #f9e79b; line-height: 1;">Aline Angela</span>
+    <p style="margin: 0; font-family: Inter, Arial, sans-serif; font-weight: 400; font-size: 13px; line-height: 1.7; color: oklch(0.9 0 0 / 0.6);">Processos criativos, inspirações de rotina e diário de campo.</p>
+    <div class="site-footer-nav" style="display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 6px;">
+      <a href="Aline Angela Site.dc.html" style="font-family: 'Geist Mono'; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; text-decoration: none; transition: color 0.2s ease;" class="footer-link">Início</a>
+      <a href="Sobre.dc.html" style="font-family: 'Geist Mono'; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; text-decoration: none; transition: color 0.2s ease;" class="footer-link">Sobre</a>
+      <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener" class="footer-ig" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid oklch(1 0 0 / 0.4); color: oklch(1 0 0 / 0.7); transition: color 0.2s ease, border-color 0.2s ease; flex-shrink: 0;">
+        <svg aria-hidden="true" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.4"></rect>
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+          <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"></circle>
+        </svg>
+      </a>
+      <a href="Journal.dc.html" style="font-family: 'Geist Mono'; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; text-decoration: none; transition: color 0.2s ease;" class="footer-link">Journal</a>
+      <a href="Work.dc.html" style="font-family: 'Geist Mono'; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; text-decoration: none; transition: color 0.2s ease;" class="footer-link">Work</a>
+    </div>
+  </div>
+
+  <div class="footer-copyright" style="max-width: 1180px; margin: clamp(40px, 6vw, 64px) auto 0; border-top: 1px dashed oklch(1 0 0 / 0.25); padding-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img alt="Icone do logotipo Aline Angela" src="assets/aline-angela-logo-icone.webp" class="decorative footer-copyright-icon" draggable="false" style="height: 16px; width: 16px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.4;">
+    <p class="footer-copyright-text" style="margin: 0; font-family: 'Geist Mono'; font-weight: 400; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(1 0 0 / 0.4); text-align: center;">© 2025-2026 Aline Angela. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const INK_DARK = "oklch(0.22 0 0)";
+const INK_LIGHT = "oklch(0.99 0 0)";
+const LINE = "oklch(0.85 0 0 / 0.6)";
+const PHRASES = ["Processos criativos", "Inspirações de rotina", "Diário de campo"];
+
+const POST_URL = "Blog Post.dc.html";
+const TAPES = ["assets/fita-adesiva-textura-papel-a.webp", "assets/fita-adesiva-textura-papel-b.webp", "assets/fita-adesiva-textura-papel-c.webp"];
+const POST_COUNT = 6;
+
+const JOURNAL_CATEGORIES = [
+  { name: "STYLE", href: "Style.dc.html", subs: [{ label: "petite", href: "Petite.dc.html" }, { label: "fragrances", href: "Fragrances.dc.html" }] },
+  { name: "BEAUTY", href: "Beauty.dc.html", subs: [{ label: "olive skin", href: "Olive Skin.dc.html" }, { label: "skincare", href: "Skincare.dc.html" }] },
+  { name: "HOME", href: "Home.dc.html", subs: [{ label: "hotel at home", href: "Hotel At Home.dc.html" }] },
+  { name: "WELL-BEING", href: "Well-being.dc.html", subs: [{ label: "skin picking", href: "Skin Picking.dc.html" }, { label: "adhd", href: "ADHD.dc.html" }] },
+  { name: "CREATIVITY", href: "Creativity.dc.html", subs: [{ label: "creative process", href: "Creative Process.dc.html" }] },
+];
+
+class Component extends DCLogic {
+  state = { menuOpen: false, isScrolled: false, typedText: "", cursorOn: true, tearing: {}, removed: {}, itemsPerView: 3, heroNameY: 160, navMenuOpen: false, navMenuTab: null, journalCat: null, panelLeftPx: 0, navTheme: "dark" };
+  trackRef = React.createRef();
+
+  openJournalTab = () => {
+    this.measureTriggerOffset("journal-nav-trigger");
+    this.setState({ navMenuOpen: true, navMenuTab: "journal" });
+  };
+  openWorkTab = () => {
+    this.measureTriggerOffset("work-nav-trigger");
+    this.setState({ navMenuOpen: true, navMenuTab: "work", portfolioHover: false, servicosHover: false, produtosHover: false });
+  };
+  measureTriggerOffset = (triggerId) => {
+    const header = document.querySelector("header");
+    const target = document.getElementById(triggerId);
+    if (header && target) {
+      const offset = target.getBoundingClientRect().left - header.getBoundingClientRect().left;
+      this.setState({ panelLeftPx: offset });
+    }
+  };
+  closeNavMenu = () => this.setState({ navMenuOpen: false, navMenuTab: null, journalCat: null });
+  setJournalCat = (name) => () => this.setState({ journalCat: name });
+  onPortfolioEnter = () => this.setState({ portfolioHover: true, servicosHover: false, produtosHover: false });
+  onServicosEnter = () => this.setState({ servicosHover: true, portfolioHover: false, produtosHover: false });
+  onProdutosEnter = () => this.setState({ produtosHover: true, portfolioHover: false, servicosHover: false });
+
+  getStep() {
+    const el = document.getElementById("blog-carousel-track");
+    if (!el) return this.state.itemsPerView * 352;
+    const card = el.querySelector(".carousel-card");
+    if (!card) return this.state.itemsPerView * 352;
+    const gap = parseFloat(getComputedStyle(el).gap) || 0;
+    return this.state.itemsPerView * (card.getBoundingClientRect().width + gap);
+  }
+
+  componentDidMount() {
+    const markFontsReady = () => this.setState({ fontsReady: true });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(markFontsReady);
+    }
+    this.fontsFallback = setTimeout(markFontsReady, 700);
+
+    this.onDocClick = (e) => {
+      if (!this.state.navMenuOpen) return;
+      const zone = document.getElementById("nav-menu-zone");
+      const surface = document.getElementById("nav-menu-surface");
+      if ((!zone || !zone.contains(e.target)) && (!surface || !surface.contains(e.target))) this.closeNavMenu();
+    };
+    document.addEventListener("click", this.onDocClick);
+
+    this.onContextMenu = (e) => {
+      if (e.target.closest(".decorative")) e.preventDefault();
+    };
+    document.addEventListener("contextmenu", this.onContextMenu);
+    this.onDragStart = (e) => {
+      if (e.target.closest(".decorative")) e.preventDefault();
+    };
+    document.addEventListener("dragstart", this.onDragStart);
+
+    this.onScroll = () => {
+      const scrolled = window.scrollY > 100;
+      if (scrolled !== this.state.isScrolled) this.setState({ isScrolled: scrolled });
+
+      const centerY = 37;
+      const sections = document.querySelectorAll("[data-nav-theme]");
+      let activeTheme = null;
+      for (let i = 0; i < sections.length; i++) {
+        const r = sections[i].getBoundingClientRect();
+        if (r.top <= centerY && r.bottom >= centerY) {
+          activeTheme = sections[i].getAttribute("data-nav-theme");
+        }
+      }
+      if (activeTheme && activeTheme !== this.state.navTheme) this.setState({ navTheme: activeTheme });
+
+      const RANGE = 320;
+      const p = Math.min(1, Math.max(0, window.scrollY / RANGE));
+      const translate = (1 - p) * 160;
+      if (translate !== this.state.heroNameY) this.setState({ heroNameY: translate });
+    };
+    this.onScroll();
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+
+    this.setState({ itemsPerView: this.computeItemsPerView() });
+    this.onResize = () => this.setState({ itemsPerView: this.computeItemsPerView() });
+    window.addEventListener("resize", this.onResize);
+
+    this.cursorTimer = setInterval(() => {
+      this.setState(s => ({ cursorOn: !s.cursorOn }));
+    }, 500);
+
+    this.phraseIndex = 0;
+    this.runTyping();
+
+    const whoFrame = document.getElementById("who-photo-frame");
+    if (whoFrame) {
+      this.whoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) whoFrame.classList.add("in-view");
+        });
+      }, { threshold: 0.4 });
+      this.whoObserver.observe(whoFrame);
+    }
+  }
+
+  runTyping() {
+    const phrase = PHRASES[this.phraseIndex % PHRASES.length];
+    let i = 0;
+    const typeStep = () => {
+      i++;
+      this.setState({ typedText: phrase.slice(0, i) });
+      if (i < phrase.length) {
+        this.typeTimer = setTimeout(typeStep, 70);
+      } else {
+        this.typeTimer = setTimeout(() => this.deletePhrase(phrase), 1400);
+      }
+    };
+    typeStep();
+  }
+
+  deletePhrase(phrase) {
+    let i = phrase.length;
+    const delStep = () => {
+      i--;
+      this.setState({ typedText: phrase.slice(0, i) });
+      if (i > 0) {
+        this.typeTimer = setTimeout(delStep, 40);
+      } else {
+        this.phraseIndex++;
+        this.typeTimer = setTimeout(() => this.runTyping(), 400);
+      }
+    };
+    delStep();
+  }
+
+  computeItemsPerView() {
+    const viewport = document.getElementById("blog-carousel-viewport");
+    const available = viewport ? viewport.clientWidth : window.innerWidth;
+    const CARD = 320, GAP = 32;
+    const fit = Math.max(1, Math.floor((available + GAP) / (CARD + GAP)));
+    return Math.min(fit, 3);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.journalCloseTimer);
+    clearTimeout(this.fontsFallback);
+    document.removeEventListener("click", this.onDocClick);
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
+    document.removeEventListener("contextmenu", this.onContextMenu);
+    document.removeEventListener("dragstart", this.onDragStart);
+    clearInterval(this.cursorTimer);
+    clearTimeout(this.typeTimer);
+  }
+
+  renderVals() {
+    const s = this.state.isScrolled;
+    const heroNameTransform = `translateY(${this.state.heroNameY}px)`;
+    const sobreRevealClass = this.state.fontsReady ? "sobre-reveal ready" : "sobre-reveal";
+    const journalCategories = JOURNAL_CATEGORIES.map((cat) => ({
+      name: cat.name,
+      isActive: this.state.journalCat === cat.name,
+      activeClass: this.state.journalCat === cat.name ? "active" : "",
+      onEnter: this.setJournalCat(cat.name),
+      href: cat.href,
+      subs: cat.subs,
+    }));
+    return {
+      heroNameTransform,
+      sobreRevealClass,
+      navMenuOpen: this.state.navMenuOpen,
+      isJournalTab: this.state.navMenuTab === "journal",
+      isWorkTab: this.state.navMenuTab === "work",
+      panelLeft: this.state.panelLeftPx,
+      journalCategories,
+      portfolioHover: this.state.portfolioHover,
+      onPortfolioEnter: this.onPortfolioEnter,
+      servicosHover: this.state.servicosHover,
+      onServicosEnter: this.onServicosEnter,
+      produtosHover: this.state.produtosHover,
+      onProdutosEnter: this.onProdutosEnter,
+      openJournalTab: this.openJournalTab,
+      openWorkTab: this.openWorkTab,
+      ink: !s ? INK_DARK : (this.state.navTheme === "light" ? INK_DARK : INK_LIGHT),
+      iconFilter: !s ? "none" : (this.state.navTheme === "light" ? "none" : "brightness(0) invert(1)"),
+      menuOpen: this.state.menuOpen,
+      menuClosedIcon: !this.state.menuOpen,
+      menuButtonLabel: this.state.menuOpen ? "Fechar menu" : "Abrir menu",
+      desktopNavDisplay: "var(--desktop-display, flex)",
+      mobileNavDisplay: "var(--mobile-display, none)",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+
+      headerPadding: s ? "12px 12px 0" : "0",
+      barBackground: s ? "rgba(250, 249, 246, 0.18)" : "rgba(250, 249, 246, 0.96)",
+      barBlur: s ? "blur(16px)" : "blur(0)",
+      barBorder: s ? `1px solid ${this.state.navTheme === "light" ? "oklch(0.2 0 0 / 0.15)" : "oklch(1 0 0 / 0.3)"}` : "1px solid transparent",
+      barBorderBottom: `1px solid ${LINE}`,
+      barRadius: s ? "999px" : "0px",
+      barShadow: s ? "0 10px 26px rgba(32, 32, 29, 0.08)" : "none",
+      barGap: "clamp(24px, 4vw, 44px)",
+      barMaxWidth: s ? "min(440px, calc(100% - 32px))" : "100%",
+      barPadding: "0 40px",
+      navGap: "clamp(22px, 3vw, 34px)",
+
+      typedText: this.state.typedText,
+      cursorOpacity: this.state.cursorOn ? 1 : 0,
+
+      trackMaxWidth: `${this.state.itemsPerView * 320 + (this.state.itemsPerView - 1) * 32}px`,
+
+      posts: Array.from({ length: POST_COUNT }, (_, p) => ({
+        photoId: `post-${p}-photo`,
+        isA: p % 3 === 0,
+        isB: p % 3 === 1,
+        isC: p % 3 === 2,
+        title: "Título de um blog post interessante sobre algo que deve será",
+        tabs: [0, 1, 2, 3, 4].map(t => {
+          const key = `${p}-${t}`;
+          return {
+            visible: !this.state.removed[key],
+            opacity: this.state.tearing[key] ? 0 : 1,
+            transform: this.state.tearing[key] ? "translateY(14px) rotate(-4deg)" : "none",
+            borderRight: t === 4 ? "none" : "2px dashed oklch(0.25 0 0 / 0.75)",
+            onClick: () => {
+              this.setState(s => ({ tearing: { ...s.tearing, [key]: true } }));
+              setTimeout(() => {
+                this.setState(s => ({ removed: { ...s.removed, [key]: true } }));
+                window.location.href = POST_URL;
+              }, 220);
+            },
+          };
+        }),
+      })),
+
+      scrollPrev: () => {
+        const el = document.getElementById("blog-carousel-track");
+        if (!el) return;
+        el.scrollBy({ left: -this.getStep(), behavior: "smooth" });
+      },
+      scrollNext: () => {
+        const el = document.getElementById("blog-carousel-track");
+        if (!el) return;
+        el.scrollBy({ left: this.getStep(), behavior: "smooth" });
+      },
+      hoverPrevStart: () => {
+        clearTimeout(this.hoverTimer);
+        this.hoverTimer = setTimeout(() => {
+          const el = document.getElementById("blog-carousel-track");
+          if (el) el.scrollBy({ left: -this.getStep(), behavior: "smooth" });
+        }, 400);
+      },
+      hoverNextStart: () => {
+        clearTimeout(this.hoverTimer);
+        this.hoverTimer = setTimeout(() => {
+          const el = document.getElementById("blog-carousel-track");
+          if (el) el.scrollBy({ left: this.getStep(), behavior: "smooth" });
+        }, 400);
+      },
+      hoverEnd: () => {
+        clearTimeout(this.hoverTimer);
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

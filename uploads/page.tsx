@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const menuLogoSrc = "/aline-angela-menu-icon.png";
+const menuLogoSrc = "/aline-angela-menu-icon.webp";
 
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(max, Math.max(min, value));
@@ -73,7 +73,7 @@ export default function Home() {
 
       <section className="editorial-proof" aria-label="Imagem com marca Aline Angela">
         <div className="proof-image-panel">
-          <img alt="Praia em preto e branco" className="proof-photo" src="/shoreline-black-white.jpg" />
+          <img alt="Praia em preto e branco" className="proof-photo" src="/shoreline-black-white.webp" />
           <img alt="" aria-hidden="true" className="proof-mark" src="/aline-angela-monogram.svg" />
         </div>
         <div className="proof-copy">
